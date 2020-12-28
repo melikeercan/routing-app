@@ -1,1 +1,35 @@
-<p>test</p>
+<button
+  class="btn btn-primary"
+  [disabled]="!allowNewServer"
+  (click)="onCreateServer()"
+>Add Server</button>
+<p [innerText]="allowNewServer"></p>
+<p>{{serverCreationStatus}}</p>
+<input
+  type="text"
+  class="form-control"
+  (input)="onUpdateServer($event)"
+>
+<input
+  type="text"
+  class="form-control"
+ [(ngModel)]="serverName"
+>
+<p *ngIf="serverCreated; else noServer">Server name is {{serverName}}</p>
+<ng-template #noServer>
+  <p>No server was actually created</p>
+</ng-template>
+<input
+  type="text"
+  class="form-control"
+  [(ngModel)]="username"
+>
+<p [ngStyle]="{backgroundColor: getColor()}">{{username}}</p>
+<button
+  class="btn btn-primary"
+  [disabled]="username.length==0"
+  (click)="addUser()"
+>
+  Click to Reset the Username
+</button>
+<p>{{users.length}}</p>

@@ -1,0 +1,13 @@
+<button
+  class="btn btn-primary"
+  (click)="toggleDisplay()"
+>
+  Show details
+</button>
+<tr *ngFor="let toggleValue of toggleValues">
+  <td
+    [ngStyle]="{backgroundColor: toggleValue >= 5 ? 'blue' : 'transparent'}"
+    [ngClass]="{'white-text': toggleValue >= 5}"
+  >{{toggleValue}}</td>
+</tr>
+<p *ngIf="showDetail">{{content}}</p>
