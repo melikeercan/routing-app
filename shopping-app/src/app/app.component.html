@@ -2,20 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-recipes *ngIf="loadedFeature==='recipe'"></app-recipes>
-      <app-shopping-list *ngIf="loadedFeature==='shopping-list'"></app-shopping-list>
-      <p appHighlight>Melodrama</p>
-      <p appBetterHighlight [defaultColor]="'orange'" [highlightColor]="'red'">Taras</p>
-      <p>{{value}}</p>
-      <div *appUnless="value > 5">
-        <p>showing</p>
-      </div>
-      <div [ngSwitch]="value">
-        <p *ngSwitchCase="5">Value is 5</p>
-        <p *ngSwitchCase="10">Value is 10</p>
-        <p *ngSwitchCase="100">Value is 100</p>
-        <p *ngSwitchDefault>Value is default</p>
-      </div>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
