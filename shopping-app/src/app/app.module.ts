@@ -18,7 +18,14 @@ import { DropdownDirectiveDirective } from './shared/dropdown-directive.directiv
 import {ShoppingListService} from './shopping-list/shopping-list.service';
 import {AppRoutingModule} from './app-routing.module';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import {RecipesService} from "./recipes/recipes.service";
+import {RecipesService} from './recipes/recipes.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SampleComponent } from './sample/sample.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     declarations: [
@@ -36,13 +43,20 @@ import {RecipesService} from "./recipes/recipes.service";
         BetterHighlightDirective,
         UnlessDirective,
         DropdownDirectiveDirective,
-        RecipeEditComponent
+        RecipeEditComponent,
+        SampleComponent
     ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule
   ],
   providers: [ShoppingListService, RecipesService],
   bootstrap: [AppComponent]
