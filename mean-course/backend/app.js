@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://melikeercan:ukhbKVsRvMtbAqJK@cluster0.antmk.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connect('mongo text here')
   .then(() => console.log('connected')).catch(() => console.log('error'));
 
 app.use(bodyParser.json());
