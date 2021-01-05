@@ -26,14 +26,26 @@ const storage = multer.diskStorage({
 })
 
 router.get('', (req, res, next) => {
-  Post.find().then((documents) => {
-    console.log('fetched');
-    console.log(documents);
-    return res.status(200).json({
-      message: 'Posts fetched successfully',
-      data: documents
+  const pageSize = +req.query.pageSize;
+  const currentPage = +req.query.page;
+  let postQuery = Post.find();
+  if (pageSize && currentPage) {
+    postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+  }
+  let fetchedPosts;
+  postQuery
+    .then((documents) => {
+      console.log('fetched');
+      console.log(documents);
+      fetchedPosts = documents;
+      return Post.count();
+    }).then(count => {
+      return res.status(200).json({
+        message: 'Posts fetched successfully',
+        posts: fetchedPosts,
+        count: count
+      });
     });
-  });
 
 });
 
@@ -58,7 +70,7 @@ router.post('', multer({storage: storage}).single('image'), (req, res, next) => 
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
-    imagePath: url + '/images/' + req.file.filename
+    imagePath: url + '/images/' + req.file.filename,
   });
   post.save().then(result => {
     console.log('saved');
@@ -66,22 +78,36 @@ router.post('', multer({storage: storage}).single('image'), (req, res, next) => 
     res.status(201).json({
       message: 'Post added successfully',
       post: {
-        ...result,
-        id: result._id
+        id: result._id,
+        title: result.title,
+        content: result.content,
+        imagePath: result.imagePath
       }
     });
   });
 
 });
 
-router.put('/:id', (req, res, next) => {
-  const post = new Post({_id: req.params.id, title: req.body.title, content: req.body.content});
+router.put('/:id', multer({storage: storage}).single('image'), (req, res, next) => {
+  let imagePath = req.body.imagePath;
+  if(req.file) {
+    console.log('file:');
+    console.log(req.file.filename);
+    const url = req.protocol + '://' + req.get('host');
+    imagePath = url + '/images/' + req.file.filename;
+  }
+  const post = new Post({_id: req.params.id, title: req.body.title, content: req.body.content, imagePath: imagePath});
   Post.updateOne({_id: req.params.id}, post).then(result => {
     console.log('updated');
     console.log(result);
     res.status(201).json({
       message: 'Post updated successfully',
-      postId: result._id
+      post: {
+        id: result._id,
+        title: result.title,
+        content: result.content,
+        imagePath: imagePath
+      }
     });
   });
 
