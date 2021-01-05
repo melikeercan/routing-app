@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const PostModelSchema = new Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
+  imagePath: { type: String, required: true },
 });
 
 //Export function to create "SomeModel" model class
